@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProductController;
@@ -29,12 +30,8 @@ Route::middleware('auth')->group(function() {
     Route::resource('product',ProductController::class,['name' => 'product']);
 
     Route::resource('post',PostController::class,['name','post']);
+    Route::put('update-user/{user}',[HomeController::class,'update_user'])->name('update-user');
 });
-
-
-
-
-
 
 
 Auth::routes();

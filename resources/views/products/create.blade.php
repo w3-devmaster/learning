@@ -45,7 +45,7 @@
             </div>
             <div class="form-group mb-3">
                 <label for="img">ภาพสินค้า</label>
-                <input name="img" type="file" class="form-control-file @error('img') is-invalid @enderror" >
+                <input multiple name="img[]" type="file" class="form-control-file @error('img') is-invalid @enderror" >
                 @error('img')
                     <span class="invalid-feedback" role="alert" >
                         {{ $message }}

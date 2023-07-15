@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('galleries', function (Blueprint $table) {
             $table->id();
+            $table->morphs('model');
+            $table->string('mimes')->nullable();
+            $table->string('file_name');
+            $table->string('path');
             $table->timestamps();
         });
     }

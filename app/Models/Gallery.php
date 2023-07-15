@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Gallery extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['mimes','file_name','path'];
+
+    public function user() {
+        return $this->morphTo();
+    }
 }

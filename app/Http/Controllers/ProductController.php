@@ -50,27 +50,23 @@ class ProductController extends Controller
     //         'image.image' => 'กรุณาอัปโหลดไฟล์ภาพเท่านั้น',
     //         'image.mimes' => 'รองรับเฉพาะไฟล์ png,jpg,webp เท่านั้น',
     //    ]);
-
-        if($request->hasFile('img')){
-            $image = $request->img;
-
-            $path = $image->storeAs('public/images/'.$image->getClientOriginalName());
-
-        }
-
-        $request->merge([
-            'image' => $path ?? null,
-        ]);
-
         $product = Product::create($request->all());
 
-        // $product = Product::create([
-        //     'product_name' => $request->product_name,
-        //     'description' => $request->description,
-        //     'amount' => $request->amount,
-        //     'price' => $request->price,
-        //     'image' => $path,
-        // ]);
+        if($request->hasFile('img')){
+
+            foreach($request->img as $image) {
+                $file_name = $image->getClientOriginalName();
+                $mime = $image->getMimeType();
+                $path = $image->storeAs('public/images/product/'.$file_name);
+
+                $product->images()->create([
+                    'mimes' => $mime,
+                    'file_name' => $file_name,
+                    'path' => $path,
+                ]);
+            }
+
+        }
 
        return redirect()->route('product.index')->with('message', 'เพิ่ม ' . $product->product_name .' เรียบร้อยแล้ว');
     }

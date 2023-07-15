@@ -26,7 +26,7 @@ class StoreProductRequest extends FormRequest
             'description' => 'nullable|string',
             'amount' => 'required|numeric|min:0',
             'price' => 'required|numeric',
-            'img' => 'nullable|image|mimes:png,jpg,webp|max:50',
+            'img.*' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:2000',
         ];
     }
 
@@ -37,7 +37,7 @@ class StoreProductRequest extends FormRequest
             'amount.required' => 'กรุณาใส่จำนวนสินค้า',
             'price.required' => 'กรุณาใส่ราคา',
             'img.image' => 'กรุณาอัปโหลดไฟล์ภาพเท่านั้น',
-            'img.mimes' => 'รองรับเฉพาะไฟล์ png,jpg,webp เท่านั้น',
+            'img.mimes' => 'รองรับเฉพาะไฟล์ png,jpg,jpeg,webp เท่านั้น',
             'img.max' => 'ขนาดไฟล์ไม่ควรเกิน 50kb',
         ];
     }

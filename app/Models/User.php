@@ -54,4 +54,8 @@ class User extends Authenticatable
     public function avatar() {
         return $this->morphOne(Gallery::class,'model');
     }
+
+    public function roles() {
+        return $this->belongsToMany(Role::class);
+    }
 }

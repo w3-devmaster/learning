@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -50,5 +51,25 @@ class HomeController extends Controller
         }
 
         return redirect()->back()->with('message','อัพเดทข้อมูลเสร็จสิ้น');
+    }
+
+    public function users() {
+        $users = User::paginate(30);
+
+        return view('users.index',compact('users'));
+    }
+
+    public function user(User $user){
+        return view('users.show',compact('user'));
+    }
+
+    public function roles(){
+        $roles = Role::all();
+
+        return view('users.roles',compact('roles'));
+    }
+
+    public function role(Role $role){
+        return view('users.role',compact('role'));
     }
 }

@@ -37,35 +37,27 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-    //    $request->validate([
-    //         'product_name' => 'required|string',
-    //         'description' => 'nullable|string',
-    //         'amount' => 'required|numeric|min:0',
-    //         'price' => 'required|numeric',
-    //         'image' => 'nullable|image|mimes:png,jpg,webp',
-    //    ],[
-    //         'product_name.required' => 'กรุณาระบุชื่อสินค้า',
-    //         'amount.required' => 'กรุณาใส่จำนวนสินค้า',
-    //         'price.required' => 'กรุณาใส่ราคา',
-    //         'image.image' => 'กรุณาอัปโหลดไฟล์ภาพเท่านั้น',
-    //         'image.mimes' => 'รองรับเฉพาะไฟล์ png,jpg,webp เท่านั้น',
-    //    ]);
+
+       $request->validate([
+            'product_name' => 'required|string',
+            'description' => 'nullable|string',
+            'amount' => 'required|numeric|min:0',
+            'price' => 'required|numeric',
+            'img.*' => 'nullable|image|mimes:png,jpg,webp',
+       ],[
+            'product_name.required' => 'กรุณาระบุชื่อสินค้า',
+            'amount.required' => 'กรุณาใส่จำนวนสินค้า',
+            'price.required' => 'กรุณาใส่ราคา',
+            'img.image' => 'กรุณาอัปโหลดไฟล์ภาพเท่านั้น',
+            'img.mimes' => 'รองรับเฉพาะไฟล์ png,jpg,webp เท่านั้น',
+       ]);
+
+
+
         $product = Product::create($request->all());
 
         if($request->hasFile('img')){
-
-            foreach($request->img as $image) {
-                $file_name = $image->getClientOriginalName();
-                $mime = $image->getMimeType();
-                $path = $image->storeAs('public/images/product/'.$file_name);
-
-                $product->images()->create([
-                    'mimes' => $mime,
-                    'file_name' => $file_name,
-                    'path' => $path,
-                ]);
-            }
-
+            $product->saveFromRequest('products',$request->img);
         }
 
        return redirect()->route('product.index')->with('message', 'เพิ่ม ' . $product->product_name .' เรียบร้อยแล้ว');

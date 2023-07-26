@@ -37,7 +37,9 @@ class PostController extends Controller
         $user = Auth::user()->id;
 
         $request->merge(['user_id' => $user]);
-        Post::create($request->all());
+        $post = Post::create($request->all());
+
+        $post->saveFromRequest('posts',$request->img); ///// เพิ่มรูปภาพ
 
         return redirect()->route('post.index')->with('message','สร้างโพสต์เสร็จสิ้น');
     }
@@ -47,7 +49,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return view('posts.show',compact('post'));
     }
 
     /**

@@ -19,7 +19,9 @@ class AccountController extends Controller
             Account::create(['user_id' => $user->id]);
         }
 
-        return view('account.index');
+        $account = $user->account;
+
+        return view('account.index',compact('account'));
     }
 
     /**
@@ -59,7 +61,18 @@ class AccountController extends Controller
      */
     public function update(Request $request, Account $account)
     {
-        //
+        $request->validate([
+            'firstname' => 'required|string',
+            'img' => 'required|image|mimes:png,jpg,webp|max:1024'
+        ]);
+
+        $account->firstname = $request->firstname;
+        $account->save();
+
+        $account->saveFromRequest('avatar',$request->img);
+
+        return redirect()->back()->with('message','บันทึกเสร็จสิ้น');
+
     }
 
     /**

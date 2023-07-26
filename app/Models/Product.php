@@ -2,19 +2,16 @@
 
 namespace App\Models;
 
+use App\Traits\HasImages;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory,SoftDeletes,HasImages;
 
     protected $fillable = ['product_name','description','amount','price','image'];
-
-    public function images() {
-        return $this->morphMany(Gallery::class,'model');
-    }
 
     public function scopeLow($query) {
         return $query->where('amount','<',15);

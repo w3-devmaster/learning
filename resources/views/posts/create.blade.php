@@ -5,8 +5,17 @@
 <hr>
 <div class="row">
     <div class="col-md-6 col-12">
-        <form action="{{ route('post.store') }}" method="post">
+        <form action="{{ route('post.store') }}" method="post" enctype="multipart/form-data">
             @csrf
+            <div class="form-group mb-3">
+                <label for="img">ภาพโพส</label>
+                <input multiple name="img[]" type="file" class="form-control-file @error('img') is-invalid @enderror" >
+                @error('img')
+                    <span class="invalid-feedback" role="alert" >
+                        {{ $message }}
+                    </span>
+                @enderror
+            </div>
             <div class="form-group mb-3">
                 <label for="title">ชื่อโพสต์</label>
                 <input name="title" type="text" value="{{ old('title') }}" class="form-control @error('title') is-invalid @enderror">

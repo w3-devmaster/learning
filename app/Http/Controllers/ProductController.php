@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\MyClass;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
@@ -68,6 +69,9 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
+        // $date = new MyClass($product->created_at);
+        // dd($date->genDate(false));
+
         return view('products.show',compact('product'));
     }
 

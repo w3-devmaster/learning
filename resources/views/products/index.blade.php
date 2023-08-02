@@ -42,16 +42,21 @@
                 <th class="text-start">ชื่อสินค้า</th>
                 <th>จำนวน</th>
                 <th>ราคา</th>
+                <th>วันที่ลงสินค้า</th>
                 <th>จัดการ</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($products as $item)
+                @php
+                    $date = new \App\Classes\MyClass($item->created_at);
+                @endphp
                 <tr>
                     <td class="align-middle">{{ $item->id }}</td>
                     <td class="text-start align-middle" >{{ $item->product_name }}</td>
                     <td class="align-middle">{{ number_format($item->amount) }}</td>
                     <td class="align-middle">{{ number_format($item->price, 2) }}</td>
+                    <td class="align-middle">{{ $date->genDate() }}</td>
                     <td class="align-middle">
                         <form action="{{ route('product.destroy', $item) }}" method="post">
                             @csrf

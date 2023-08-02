@@ -57,6 +57,7 @@ Route::middleware('auth')->group(function() {
     });
 });
 
+Route::view('all-user/test','users.test-function');
 
 Auth::routes();
 

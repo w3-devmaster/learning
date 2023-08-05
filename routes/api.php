@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\TestController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -15,9 +17,30 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('test',function() {
+    $data = [
+        'message' => 'TEST 1 OK',
+    ];
+
+    return response()->json($data);
+});
+
+Route::post('auth',[AuthController::class,'authenticate']);
+
+Route::middleware('auth:sanctum')->group(function() {
+    Route::get('test2',function() {
+        $data = [
+            'message' => 'TEST 2 OK',
+        ];
+
+        return response()->json($data);
+    });
+
+    Route::apiResource('post',PostController::class);
+
+    Route::get('user',[AuthController::class,'user']);
+    Route::post('logout',[AuthController::class,'logout']);
+    Route::post('logout-all',[AuthController::class,'logout_all']);
 });
 
 
-Route::get('products',[TestController::class,'products']);

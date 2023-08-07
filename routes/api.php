@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\PostController;
+use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\TestController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +25,8 @@ Route::get('test',function() {
 
     return response()->json($data);
 });
+
+Route::get('products',[ProductController::class,'index']);
 
 Route::post('auth',[AuthController::class,'authenticate']);
 
